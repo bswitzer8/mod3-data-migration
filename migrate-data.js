@@ -33,10 +33,9 @@ mongodb.MongoClient.connect(url, (error, db) => {
 			let upper = (i + chunks > customerFile.length) ? customerFile.length - 1 : i + chunks;
 			
 			tasks.push((callBack) => {
-				let lower = i;
-				console.log(`Inserting chunks ${lower} to ${upper}\n`);
+				console.log(`Inserting chunks ${i} to ${upper}\n`);
 				
-				let custies = customerFile.slice(lower, upper);
+				let custies = customerFile.slice(i, upper);
 				console.log(customerFile.length);
 				
 				// insert the array data
