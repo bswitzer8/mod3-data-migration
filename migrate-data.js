@@ -15,6 +15,12 @@ const url = 'mongodb://localhost:27017/edx-course-db';
 let chunks = parseInt(process.argv[2]) || customerFile.length;
 let tasks = [];
 
+const insertion = (db, data) => {
+	db.collection("customers").insert(data, (error, results) => {
+	console.log(`${results.result.n} records inserted`);	
+	});
+};
+
 mongodb.MongoClient.connect(url, (error, db) => {
 	if (error) return process.exit(1)
 	console.log(`Chunks: ${chunks}`);
@@ -37,11 +43,9 @@ mongodb.MongoClient.connect(url, (error, db) => {
 				
 				let custies = customerFile.slice(i, upper);
 				console.log(customerFile.length);
-				
+				callBack(insertion(db, custies));
 				// insert the array data
-				db.collection("customers").insert(custies, (error, results) => {
-					callBack(error, results);
-				});
+				
 			});
 		}	
 	}
